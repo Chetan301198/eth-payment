@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import metamask from '../../assets/images/metamask.png';
 import fortmatic from '../../assets/images/fortmatic.png';
 import phantom from '../../assets/images/phantom.png';
@@ -7,7 +7,7 @@ import walletconnect from '../../assets/images/walletconnect.png';
 import close from '../../assets/images/close.png';
 import {useWeb3React} from "@web3-react/core";
 import {Web3Provider} from "@ethersproject/providers";
-import {useEagerConnect, useInactiveListener} from "../../hooks";
+import {useInactiveListener} from "../../hooks";
 import {ConnectorNames, connectorsByName} from "../../WalletWrapper";
 import { ethers } from "ethers";
 

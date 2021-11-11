@@ -10,6 +10,7 @@ import {Web3Provider} from "@ethersproject/providers";
 import {useInactiveListener} from "../../hooks";
 import {ConnectorNames, connectorsByName} from "../../WalletWrapper";
 import { ethers } from "ethers";
+import {toast} from "react-toastify";
 
 
 const PaymentButton = () => {
@@ -31,7 +32,6 @@ const PaymentButton = () => {
     // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
     useInactiveListener(!!activatingConnector)
 
-
     const doc = window as any;
     const startPayment = async ({ ether } : any) => {
         try {
@@ -40,15 +40,15 @@ const PaymentButton = () => {
             await doc.ethereum.send("eth_requestAccounts");
             const provider = new ethers.providers.Web3Provider(doc.ethereum);
             const signer = provider.getSigner();
-            ethers.utils.getAddress('0x843d6614dD71fB135D06452Ec3e31878dD840A3f')
             const tx = await signer.sendTransaction({
-                to: '0x843d6614dD71fB135D06452Ec3e31878dD840A3f',
+                to: ethers.utils.getAddress('0x843d6614dD71fB135D06452Ec3e31878dD840A3f'),
                 value: ethers.utils.parseEther(ether)
             });
-            console.log("ETH",ether);
+            console.log("ETH",ethers);
             console.log("TX", tx);
         } catch (err) {
-            console.log(err);
+            toast.error(`Insufficient funds in your wallet, please add funds from https://faucet.ropsten.be/\n for testing purposes 
+            or make sure that your metamask is set to Ropsten Test Network`);
         }
     };
 

@@ -32,6 +32,19 @@ const PaymentButton = () => {
     // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
     useInactiveListener(!!activatingConnector)
 
+    const FundError = () => {
+        return(
+            <>
+                <p>
+                    Insufficient funds in your wallet, please add funds from <a href='https://faucet.ropsten.be/' rel='noreferrer' target='_blank'>https://faucet.ropsten.be/</a> for testing purposes
+                </p>
+                <p>
+                    or make sure that your metamask is set to <b>Ropsten Test Network</b>
+                </p>
+            </>
+        )
+    }
+
     const doc = window as any;
     const startPayment = async ({ ether } : any) => {
         try {
@@ -47,8 +60,10 @@ const PaymentButton = () => {
             console.log("ETH",ethers);
             console.log("TX", tx);
         } catch (err) {
-            toast.error(`Insufficient funds in your wallet, please add funds from https://faucet.ropsten.be/\n for testing purposes 
-            or make sure that your metamask is set to Ropsten Test Network`);
+            // toast.error(`Insufficient funds in your wallet, please add funds from
+            // https://faucet.ropsten.be/ for testing purposes or make sure that your metamask
+            // is set to Ropsten Test Network`);
+            toast.error(FundError);
         }
     };
 

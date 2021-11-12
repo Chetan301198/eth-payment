@@ -17,6 +17,7 @@ const PaymentButton = () => {
 
     const [isActive, setIsActive] = useState(false);
     const [amount, setAmount] = useState(0);
+    const [tipMsg, setTipMsg] = useState(false);
 
     const context = useWeb3React<Web3Provider>()
     const { connector, activate, deactivate,  } = context
@@ -57,12 +58,10 @@ const PaymentButton = () => {
                 to: ethers.utils.getAddress('0x843d6614dD71fB135D06452Ec3e31878dD840A3f'),
                 value: ethers.utils.parseEther(ether)
             });
-            console.log("ETH",ethers);
+            console.log("ETH",signer._isSigner);
             console.log("TX", tx);
+            setTipMsg(signer._isSigner);
         } catch (err) {
-            // toast.error(`Insufficient funds in your wallet, please add funds from
-            // https://faucet.ropsten.be/ for testing purposes or make sure that your metamask
-            // is set to Ropsten Test Network`);
             toast.error(FundError);
         }
     };
@@ -75,7 +74,8 @@ const PaymentButton = () => {
         const json = await response.json();
         const cost = Number(amount/json.price).toFixed(8);
 
-        console.log('COST', cost)
+        setIsActive(false);
+        // setTipMsg(true);
 
         await startPayment({
             ether: cost,
@@ -101,27 +101,32 @@ const PaymentButton = () => {
     ]
     return(
         <div className='wrapper'>
-            <div className={isActive ? 'wallet-wrapper' : 'hide'}>
-                <div className='wallet' onClick={handlePayment}>
-                    <img src={metamask} className='wallet-img' alt='Wallet'/>
+            <div className='wallet-msg'>
+                <div className={isActive ? 'wallet-wrapper' : 'hide'}>
+                    <div className='wallet' onClick={handlePayment}>
+                        <img src={metamask} className='wallet-img' alt='Wallet'/>
+                    </div>
+                    <div className='wallet'>
+                        <img src={walletconnect} className='wallet-img' alt='Wallet'/>
+                    </div>
+                    <div className='wallet'>
+                        <img src={fortmatic} className='wallet-img' alt='Wallet'/>
+                    </div>
+                    <div className='wallet'>
+                        <img src={anim} className='wallet-img' alt='Wallet'/>
+                    </div>
+                    <div className='wallet'>
+                        <img src={phantom} className='wallet-img' alt='Wallet'/>
+                    </div>
+                    <div className='wallet' onClick={() => {
+                        setIsActive(false)
+                        setAmount(0)
+                    }}>
+                        <img src={close} className='close-img' alt='Wallet'/>
+                    </div>
                 </div>
-                <div className='wallet'>
-                    <img src={walletconnect} className='wallet-img' alt='Wallet'/>
-                </div>
-                <div className='wallet'>
-                    <img src={fortmatic} className='wallet-img' alt='Wallet'/>
-                </div>
-                <div className='wallet'>
-                    <img src={anim} className='wallet-img' alt='Wallet'/>
-                </div>
-                <div className='wallet'>
-                    <img src={phantom} className='wallet-img' alt='Wallet'/>
-                </div>
-                <div className='wallet' onClick={() => {
-                    setIsActive(false)
-                    setAmount(0)
-                }}>
-                    <img src={close} className='close-img' alt='Wallet'/>
+                <div className={tipMsg ? 'thanks-message' : 'hide'}>
+                    <p>Thank you for the tip!</p>
                 </div>
             </div>
             <div className='btn-wrapper'>

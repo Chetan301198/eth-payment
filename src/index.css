@@ -32,8 +32,11 @@ body {
   color: #5217f6;
 }
 .hide{
-  visibility: hidden;
-  opacity: 0;
+  display: none;
+}
+.wallet-msg{
+  display: flex;
+  align-items: center;
   height: 70px;
 }
 .wallet-wrapper{
@@ -57,5 +60,14 @@ body {
 }
 .close-img{
   width: 20px;
+}
+.thanks-message{
+  background: #fff;
+  padding: 1px 0;
+  width: 250px;
+  border-radius: 10px;
+  font-size: 20px;
+  text-align: center;
+  margin: 0 50px;
 }
 /* ================ END PAYMENT BUTTON ================*/

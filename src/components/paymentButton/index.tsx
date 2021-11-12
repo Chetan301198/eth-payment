@@ -65,6 +65,9 @@ const PaymentButton = () => {
             toast.error(FundError);
         }
     };
+    setTimeout(() => {
+        setTipMsg(false);
+    }, 5000)
 
     const handlePayment = async () => {
         await deactivate()

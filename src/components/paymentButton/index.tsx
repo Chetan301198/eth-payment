@@ -61,6 +61,9 @@ const PaymentButton = () => {
             console.log("ETH",signer._isSigner);
             console.log("TX", tx);
             setTipMsg(signer._isSigner);
+            if (signer._isSigner){
+                setAmount(0);
+            }
         } catch (err) {
             toast.error(FundError);
         }
@@ -78,7 +81,6 @@ const PaymentButton = () => {
         const cost = Number(amount/json.price).toFixed(8);
 
         setIsActive(false);
-        // setTipMsg(true);
 
         await startPayment({
             ether: cost,
